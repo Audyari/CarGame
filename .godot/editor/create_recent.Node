@@ -1,4 +1,10 @@
+CollisionPolygon2D
 CollisionShape2D
-AnimatedSprite2D
+Area2D
+TextureRect
+TouchScreenButton
+Button
+CanvasLayer
 Sprite2D
+AnimatedSprite2D
 CharacterBody2D

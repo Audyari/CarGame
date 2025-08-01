@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dy1p50elwtbbo"]
+
+[ext_resource type="Script" uid="uid://birx7os07tw5i" path="res://ui_controls.gd" id="1_p0k5w"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_p0k5w")
+
+[node name="ButtonGas2" type="TouchScreenButton" parent="."]
+
+[node name="ButtonBrake2" type="TouchScreenButton" parent="."]
+
+[node name="ButtonLeft2" type="TouchScreenButton" parent="."]
+
+[node name="ButtonRight2" type="TouchScreenButton" parent="."]
