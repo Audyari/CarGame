@@ -1,1 +1,5 @@
 res://main.tscn
+res://car.tscn
+res://UIControls.tscn
+res://main.gd
+res://car.gd

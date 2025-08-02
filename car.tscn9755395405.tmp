@@ -47,5 +47,4 @@ shape = SubResource("RectangleShape2D_v0hk8")
 position = Vector2(26.5, 0)
 shape = SubResource("RectangleShape2D_td361")
 
-[connection signal="area_entered" from="HitArea" to="." method="_on_hit_area_area_entered"]
 [connection signal="area_exited" from="HitArea" to="." method="_on_hit_area_area_exited"]

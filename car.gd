@@ -1,12 +1,12 @@
 extends CharacterBody2D
 
 # Konstanta fisika mobil
-const ACCELERATION = 800.0
-const MAX_SPEED = 100.0
-const FRICTION = 400.0
-const TURN_SPEED = 2.5
-const DRIFT_FACTOR = 0.85
-const MIN_SPEED_TO_TURN = 10.0
+var  ACCELERATION = 800.0
+var MAX_SPEED = 100.0
+var FRICTION = 400.0
+var TURN_SPEED = 2.5
+var DRIFT_FACTOR = 0.85
+var MIN_SPEED_TO_TURN = 10.0
 
 
 # Variabel untuk efek visual (opsional)
@@ -18,12 +18,26 @@ func _ready() -> void:
 	print("Car controller ready!")
 
 func _physics_process(delta: float) -> void:
+	
+
+	
 	handle_acceleration(delta)
 	handle_steering(delta)
 	apply_drift_physics()
 	apply_friction(delta)
 	limit_max_speed()
+	
+	if keluar_jalur:
+		ACCELERATION = 300.0
+		MAX_SPEED = 50.0
+		FRICTION = 200.0
+	else:
+		ACCELERATION = 800.0
+		MAX_SPEED = 100.0
+		FRICTION = 400.0
+		
 	move_and_slide()
+
 	handle_screen_bounds()
 
 func handle_acceleration(delta: float) -> void:
@@ -95,10 +109,52 @@ func limit_max_speed() -> void:
 		velocity = velocity.normalized() * MAX_SPEED
 
 func handle_screen_bounds() -> void:
-	# Batasi mobil agar tidak keluar dari layar
 	var screen_size = get_viewport_rect().size
 	var pos = global_position
 	var margin = 20
+	
+	pos.x = clamp(pos.x, margin, screen_size.x - margin)
+	pos.y = clamp(pos.y, margin, screen_size.y - margin)
+
+	if pos != global_position:
+		if pos.x != global_position.x:
+			velocity.x = 0
+		if pos.y != global_position.y:
+			velocity.y = 0
+	
+	global_position = pos
+	
+	# Clamp posisi
+	pos.x = clamp(pos.x, margin, screen_size.x - margin)
+	pos.y = clamp(pos.y, margin, screen_size.y - margin)
+
+	# Tambahkan deteksi
+	if pos != global_position:
+		print("Nabrak batas layar!")
+		
+		if pos.x != global_position.x:
+			velocity.x = 0
+		if pos.y != global_position.y:
+			velocity.y = 0
+	
+	global_position = pos
+	
+	# Clamp posisi agar tetap di dalam layar
+	pos.x = clamp(pos.x, margin, screen_size.x - margin)
+	pos.y = clamp(pos.y, margin, screen_size.y - margin)
+
+	# ❗Tambahkan print di sini:
+	if pos != global_position:
+		print("Nabrak batas layar!")
+		
+		if pos.x != global_position.x:
+			velocity.x = 0
+		if pos.y != global_position.y:
+			velocity.y = 0
+	
+	global_position = pos
+	# Batasi mobil agar tidak keluar dari layar
+
 	
 	# Clamp posisi
 	pos.x = clamp(pos.x, margin, screen_size.x - margin)
@@ -120,3 +176,19 @@ func get_speed() -> float:
 func get_speed_kmh() -> float:
 	# Konversi ke km/h (asumsi 1 unit = 1 meter)
 	return velocity.length() * 3.6
+
+var keluar_jalur = false
+
+func _on_hit_area_area_exited(area: Area2D) -> void:
+	if area.name == "Roud":
+		print("🚨 Keluar jalur! Kecepatan diperlambat.")
+		$AnimatedSprite2D.play("crash")
+		velocity *= 0.5  # Perlambat kecepatan
+		keluar_jalur = true
+
+
+func _on_hit_area_area_entered(area: Area2D) -> void:
+	if area.name == "Roud" and keluar_jalur:
+		print("✅ Kembali ke jalur, kecepatan normal")
+		$AnimatedSprite2D.play("default")
+		keluar_jalur = false

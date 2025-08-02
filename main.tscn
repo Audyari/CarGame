@@ -1,22 +1,82 @@
-[gd_scene load_steps=3 format=3 uid="uid://gicmx3w8k02i"]
+[gd_scene load_steps=8 format=3 uid="uid://gicmx3w8k02i"]
 
 [ext_resource type="PackedScene" uid="uid://lna5wnqxrot7" path="res://car.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://dg064ufydo80f" path="res://main.gd" id="1_lquwl"]
+[ext_resource type="Texture2D" uid="uid://b3xdlubbfds6j" path="res://image/StartEnd.png" id="3_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://bsin2ibuvq4dr" path="res://image/Background.png" id="3_h2yge"]
+[ext_resource type="Texture2D" uid="uid://b8h2lpf4m837i" path="res://image/Checkpoint.png" id="4_1bvp3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(36, 73)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(16, 164)
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_lquwl")
 
 [node name="Car" parent="." instance=ExtResource("1_ig7tw")]
-z_index = 10
-position = Vector2(390, 89)
+position = Vector2(460, 97)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("3_h2yge")
 
-[node name="Roud" type="Area2D" parent="."]
+[node name="StartEnd" type="Area2D" parent="."]
+position = Vector2(-114, -4)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Roud" groups=["Rouds"]]
-position = Vector2(299, 4)
-scale = Vector2(0.747093, 1)
-polygon = PackedVector2Array(24, 40, 40.1556, 134, 198.075, 133, 353.343, 137, 400.191, 142, 440.347, 155, 471.133, 186, 480.503, 216, 477.852, 294, 484.518, 358, 456.409, 424, 420.269, 448, 297.125, 461, 171.304, 461, -44.1977, 461, -137.868, 450, -192.747, 416, -208.809, 365, -211.486, 260, -204.794, 212, -187.393, 171, -140.545, 146, -76.2957, 136, 38.8171, 134, 24.0934, 41, -179.362, 39, -226.21, 52, -271.72, 68, -313.214, 109, -325.261, 159, -335.969, 228, -342.661, 313, -330.615, 408, -313.214, 469, -297.152, 498, -270.381, 531, -186.081, 553, 21.4163, 553, 212.825, 551, 400.218, 558, 487.222, 550, 551.444, 521, 580.892, 479, 598.293, 418, 611.678, 349, 609.001, 264, 604.985, 214, 598.293, 157, 582.23, 111, 560.814, 80, 492.549, 44, 388.145, 35, 259.647, 40, 109.732, 44)
+[node name="Sprite2D" type="Sprite2D" parent="StartEnd"]
+position = Vector2(376, 93)
+texture = ExtResource("3_1bvp3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartEnd"]
+position = Vector2(376, 91.5)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="Checkpoint1" type="Area2D" parent="."]
+z_index = 15
+position = Vector2(699, 399)
+rotation = 1.5708
+
+[node name="Sprite2D" type="Sprite2D" parent="Checkpoint1"]
+position = Vector2(-4, -1)
+texture = ExtResource("4_1bvp3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint1"]
+position = Vector2(-4, -1)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="Checkpoint2" type="Area2D" parent="."]
+z_index = 15
+position = Vector2(221, 515)
+
+[node name="Sprite2D" type="Sprite2D" parent="Checkpoint2"]
+position = Vector2(-4, -1)
+texture = ExtResource("4_1bvp3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint2"]
+position = Vector2(-4, -1)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="Checkpoint3" type="Area2D" parent="."]
+z_index = 15
+position = Vector2(92, 215)
+rotation = 1.5708
+
+[node name="Sprite2D" type="Sprite2D" parent="Checkpoint3"]
+position = Vector2(-4, -1)
+texture = ExtResource("4_1bvp3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint3"]
+position = Vector2(-4, -1)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="Roud" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Roud"]
+position = Vector2(356, 90)
+polygon = PackedVector2Array(11, 11, 15, -41, -22, -43, -78, -45, -222, -36, -194, 81, -152, 55, -30, 43, 77, 48, 159, 49, 215, 50, 258, 57, 277, 70, 293, 105, 301, 200, 301, 280, 274, 356, 113, 381, -117, 374, -187, 358, -215, 252, -208, 152, -200, 79, -222, -35, -252, -22, -280, 9, -299, 81, -309, 220, -302, 288, -297, 378, -271, 432, -251, 451, -228, 453, -181, 474, -85, 466, 159, 467, 273, 473, 358, 429, 388, 346, 394, 174, 382, 65, 376, 38, 366, 13, 341, -23, 268, -45, 127, -46, 93, -44, 16, -41, 76, 46)
+
+[connection signal="area_entered" from="StartEnd" to="." method="_on_start_end_area_entered"]
